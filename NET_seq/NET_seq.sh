@@ -55,6 +55,7 @@ hisat2-build -f --ss spo_chr_splicesites.txt --exon spo_chr_exons.txt /bgfs/ckap
 
 module load umi-tools/0.5.5
 
+#### 1. Miseq
 umi_tools extract --stdin=ck01_R1.fastq --read2-in=ck01_R2.fastq --bc-pattern=NNNN --bc-pattern2=NNNN --stdout=ck01_R1_UMI.fastq --read2-out=ck01_R2_UMI.fastq
 
 umi_tools extract --stdin=ck03_R1.fastq --read2-in=ck03_R2.fastq --bc-pattern=NNNN --bc-pattern2=NNNN --stdout=ck03_R1_UMI.fastq --read2-out=ck03_R2_UMI.fastq
@@ -86,3 +87,6 @@ umi_tools extract --stdin=ck12_R1.fastq --read2-in=ck12_R2.fastq --bc-pattern=NN
 umi_tools extract --stdin=ck14_R1.fastq --read2-in=ck14_R2.fastq --bc-pattern=NNNN --bc-pattern2=NNNN --stdout=ck14_R1_UMI.fastq --read2-out=ck14_R2_UMI.fastq
 
 umi_tools extract --stdin=ck16_R1.fastq --read2-in=ck16_R2.fastq --bc-pattern=NNNN --bc-pattern2=NNNN --stdout=ck16_R1_UMI.fastq --read2-out=ck16_R2_UMI.fastq
+
+
+####2. Hiseq
