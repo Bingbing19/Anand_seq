@@ -50,7 +50,22 @@ hisat2_extract_splice_sites.py /bgfs/ckaplan/Anand_seq/Genomes/Spo/schizosacchar
 
 hisat2-build -f --ss spo_chr_splicesites.txt --exon spo_chr_exons.txt /bgfs/ckaplan/Anand_seq/Genomes/Combined_yeast/Budding_Fission_chr.fa ht2_Budding_Fission_spo > ht2_Budding_Fission_index_spo.txt &
 
- 
+#1.3 Cat chr in the mixed genome. This is to know the order of Spo and Sce in the mixed genome.
+
+cat Budding_Fission_chr.fa | grep "chr"
+
+##Spo first then Sce.
+
+#1.4 Cat Sco and Sce exon and splicesite together in the path: /bgfs/ckaplan/Anand_seq/Genomes/INDEX_HISAT2/spo_sce_index
+
+cat /bgfs/ckaplan/Anand_seq/Genomes/INDEX_HISAT2/spo_index_2019/spo_chr_exons.txt /bgfs/ckaplan/Anand_seq/Genomes/INDEX_HISAT2/sce_index_2019/R64-1-1_chr_exons.txt > spo_sce_exons.txt
+
+cat /bgfs/ckaplan/Anand_seq/Genomes/INDEX_HISAT2/spo_index_2019/spo_chr_splicesites.txt /bgfs/ckaplan/Anand_seq/Genomes/INDEX_HISAT2/sce_index_2019/R64-1-1_chr_splicesites.txt > spo_sce_splicesites.txt
+
+#1.5 Index exons and splicesite of Spo and Sce in mixed genome.
+
+hisat2-build -f --ss spo_sce_splicesites.txt --exon spo_sce_exons.txt /bgfs/ckaplan/Anand_seq/Genomes/Combined_yeast/Budding_Fission_chr.fa ht2_spo_sce_index > ht2_spo_sce_index.txt &
+
 ### UMI trimming
 
 module load umi-tools/0.5.5
