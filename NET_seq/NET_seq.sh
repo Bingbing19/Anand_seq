@@ -104,4 +104,26 @@ umi_tools extract --stdin=ck14_R1.fastq --read2-in=ck14_R2.fastq --bc-pattern=NN
 umi_tools extract --stdin=ck16_R1.fastq --read2-in=ck16_R2.fastq --bc-pattern=NNNN --bc-pattern2=NNNN --stdout=ck16_R1_UMI.fastq --read2-out=ck16_R2_UMI.fastq
 
 
-####2. Hiseq
+####2. Hiseq2 Alignment
+
+#2.1 test alignment on Miseq ck01
+
+hisat2 -q --phred33 --max-intronlen 4000 --known-splicesite-infile --no-unal /bgfs/ckaplan/Anand_seq/Genomes/INDEX_HISAT2/spo_sce_index/spo_sce_splicesites.txt --rna-strandness RF --secondary --no-mixed --summary-file CK01_test.txt -x /bgfs/ckaplan/Anand_seq/Genomes/INDEX_HISAT2/spo_sce_index/ht2_spo_sce_index -1 ck01_R1_UMI.fastq -2 ck01_R2_UMI.fastq -S ck01_test.sam &
+
+# Too fewer reads aligned (<1%)
+# 3355650 (100.00%) were paired; of these:
+# 3233530 (96.36%) aligned concordantly 0 times
+# 14148 (0.42%) aligned concordantly exactly 1 time
+# 107972 (3.22%) aligned concordantly >1 times
+
+#2.1.1 test alignment on FR mode, got same results.3.78% overall alignment rate.
+#2.1.2 test alignment on mixed genome but indexed by sce spliceste and using sce splicesite, same result.
+#2.1.3 test alignment on sce genome indexed by sce exons and splicesite:
+
+hisat2 -q --phred33 --max-intronlen 4000 --known-splicesite-infile --no-unal /bgfs/ckaplan/Anand_seq/Genomes/INDEX_HISAT2/sce_index_2019/R64-1-1_chr_splicesites.txt --rna-strandness RF --secondary --no-mixed --summary-file CK011_test.txt -x /bgfs/ckaplan/Anand_seq/indexed_r64_r64trans_2018/HISAT2_Sce/r64/genome -1 ck01_R1_UMI.fastq -2 ck01_R2_UMI.fastq -S ck011_test.sam &  
+
+##2.94% overall alignment rate
+
+#summary: ck01 is the no tag control, so, low alignment rate is reasonable.
+
+
