@@ -126,4 +126,22 @@ hisat2 -q --phred33 --max-intronlen 4000 --known-splicesite-infile --no-unal /bg
 
 #summary: ck01 is the no tag control, so, low alignment rate is reasonable.
 
+#2.2 
+#2.2.1 Adapter Trimming in R2.Adapter=GATCGTCGGACTGTAGAACTCTGAAC
+
+cutadapt -a GATCGTCGGACTGTAGAACTCTGAAC -o ck03_R2_UMI_adapter.fastq  ck03_R2_UMI.fastq > cutadapt_ck03_R2.txt
+#97.3% trimmed
+
+
+cutadapt -a GATCGTCGGACTGTAGAACTCTGAAC -o ck03_S2_L003_UMI_adapter_R2_001.fastq  ck03_S2_L003_UMI_R2_001.fastq > cutadapt_ck03_L003_R2.txt
+#74.7% trimmed
+
+cutadapt -a GATCGTCGGACTGTAGAACTCTGAAC -O 5 -o ck03_S2_L003_UMI_adapter_R2_001.fastq  ck03_S2_L003_UMI_R2_001.fastq > cutadapt_ck03_L003_R2.txt
+#97.2% trimmed 
+
+
+cutadapt -a GATCGTCGGACTGTAGAACTCTGAAC -O 5 -o ck03_R2_UMI_adapter.fastq  ck03_R2_UMI.fastq > cutadapt_ck03_R2.txt
+#72.7% trimmed
+
+##2.2.2 Adapter trimming in R1: NNNNACAGGTTCAGAGTTCTACAGTCCGAC; GTTCAGAGTTCTACAGTCCGACGATC
 
