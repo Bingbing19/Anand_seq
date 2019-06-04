@@ -145,3 +145,13 @@ cutadapt -a GATCGTCGGACTGTAGAACTCTGAAC -O 5 -o ck03_R2_UMI_adapter.fastq  ck03_R
 
 ##2.2.2 Adapter trimming in R1: NNNNACAGGTTCAGAGTTCTACAGTCCGAC; GTTCAGAGTTCTACAGTCCGACGATC
 
+#3. remove mitochondrial RNA.
+
+samtools index -b input ck16_R2_hs2_unique_sorted.bam
+
+samtools idxstats ck16_R2_hs2_unique_sorted.bam | cut -f 1 | grep -v chrM | xargs samtools view -b ck16_R2_hs2_unique_sorted.bam > ck16_R2_hs2_unique_sorted_mt.bam
+
+##Another command, removes Pombe mt RNA, gap filling RNA.
+
+samtools view -b ck16_R2_hs2_unique_sorted.bam chromosome_1 chromosome_2 chromosome_3 chrI chrII chrIII chrIV chrV chrVI chrVII chrVIII chrIX chrX chrXI chrXII chrXIII chrXIV chrXV chrXVI > ck16_R2_hs2_unique_sorted_mt.bam
+
