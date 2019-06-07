@@ -38,13 +38,17 @@ module load cufflinks/2.2.1
 
 gffread -T schizosaccharomyces_pombe.genome.gff3 -o schizosaccharomyces_pombe.genome.gtf
 
+#1.1 Switch chromosome name in pombe gtf file from "I" to "chromosome_1", this is to be identical with pombe genome fastq file.
+
+sed 's/III/chromosome_3/' schizosaccharomyces_pombe.genome.gtf | sed 's/II/chromosome_2/' | sed 's/I/chromosome_1/'  - > schizosaccharomyces_pombe_chr.genome.gtf 
+
 #1.1 Extract exons and splicesite in Spo by HISAT2.
 
 module load hisat2/2.1.0
 
-hisat2_extract_exons.py /bgfs/ckaplan/Anand_seq/Genomes/Spo/schizosaccharomyces_pombe.genome.gtf > /bgfs/ckaplan/Anand_seq/Genomes/Spo/spo_chr_exons.txt
+hisat2_extract_exons.py /bgfs/ckaplan/Anand_seq/Genomes/Spo/schizosaccharomyces_pombe_chr.genome.gtf > /bgfs/ckaplan/Anand_seq/Genomes/Spo/spo_chr_exons.txt
 
-hisat2_extract_splice_sites.py /bgfs/ckaplan/Anand_seq/Genomes/Spo/schizosaccharomyces_pombe.genome.gtf > spo_chr_splicesites.txt
+hisat2_extract_splice_sites.py /bgfs/ckaplan/Anand_seq/Genomes/Spo/schizosaccharomyces_pombe.genome_chr.gtf > spo_chr_splicesites.txt
 
 #1.2 Index exons and splicesite of Spo
 
@@ -64,7 +68,7 @@ cat /bgfs/ckaplan/Anand_seq/Genomes/INDEX_HISAT2/spo_index_2019/spo_chr_splicesi
 
 #1.5 Index exons and splicesite of Spo and Sce in mixed genome.
 
-hisat2-build -f --ss spo_sce_splicesites.txt --exon spo_sce_exons.txt /bgfs/ckaplan/Anand_seq/Genomes/Combined_yeast/Budding_Fission_chr.fa ht2_spo_sce_index > ht2_spo_sce_index.txt &
+hisat2-build -f --ss spo_sce_splicesites_chr.txt --exon spo_sce_exons_chr.txt /bgfs/ckaplan/Anand_seq/Genomes/Combined_yeast/Budding_Fission_chr.fa ht2_spo_sce_index > ht2_spo_sce_index.txt &
 
 ### UMI trimming
 
