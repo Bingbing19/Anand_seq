@@ -31,16 +31,22 @@ cat *fastq | awk -v FS=: '{ getline a; getline b; getline c; if ($8=="Y") { prin
 
 #1. Index exons and splicesite of Spo. Sce has been down in 092718.
 # File path: /bgfs/ckaplan/Anand_seq/Genomes/Spo
-module load cufflinks/2.2.1
 
-#   -T  -o option will output GTF format instead of GFF3
-# different between gtf (general transfer format) and gff(general feature format): https://useast.ensembl.org/info/website/upload/gff.html
+#1.0 Switch chromosome name in pombe gff file from "I" to "chromosome_1", this is to be identical with pombe genome fastq file.
 
-gffread -T schizosaccharomyces_pombe.genome.gff3 -o schizosaccharomyces_pombe.genome.gtf
+sed 's/III/chromosome_3/' schizosaccharomyces_pombe.genome.gff3 | sed 's/II/chromosome_2/'  - > schizosaccharomyces_pombe_chr.genome.gff
 
-#1.1 Switch chromosome name in pombe gtf file from "I" to "chromosome_1", this is to be identical with pombe genome fastq file.
+sed 's/IT/3T/' schizosaccharomyces_pombe_chr.genome.gff | sed 's/ID/TD/'  - > schizosaccharomyces_pombe_chr_1.genome.gff
 
-sed 's/III/chromosome_3/' schizosaccharomyces_pombe.genome.gtf | sed 's/II/chromosome_2/' | sed 's/I/chromosome_1/'  - > schizosaccharomyces_pombe_chr.genome.gtf 
+sed 's/I/chromosome_1/' schizosaccharomyces_pombe_chr_1.genome.gff | sed 's/TD/ID/' | sed 's/3T/IT/' - > schizosaccharomyces_pombe_chr_2.genome.gff
+
+sed 's/SPMchromosome_1T/SPMIT/' schizosaccharomyces_pombe_chr_2.genome.gff | sed 's/RNAchromosome_1LE/RNAILE/' - > schizosaccharomyces_pombe_chr_3.genome.gff
+
+sed 's/RNAHchromosome_1S/RNAHIS/' schizosaccharomyces_pombe_chr_3.genome.gff > schizosaccharomyces_pombe_chr_4.genome.gff
+
+#1.0.1, Convert gff to gtf: # different between gtf (general transfer format) and gff(general feature format): https://useast.ensembl.org/info/website/upload/gff.html
+module load cufflinks/2.2.1 
+gffread -T schizosaccharomyces_pombe.genome_chr.gff -o schizosaccharomyces_pombe_chr.genome.gtf
 
 #1.1 Extract exons and splicesite in Spo by HISAT2.
 
